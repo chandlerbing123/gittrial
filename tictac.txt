@@ -1,0 +1,553 @@
+import turtle
+import random
+from turtle import *
+
+window = turtle.Screen()
+window.title('trial')
+window.bgcolor('black')
+window.title('tic-tac-toe')
+
+colors = ['red', 'yellow','blue','forestgreen','gold','pink','maroon','purple']
+p1 = random.randint(0, 1)
+p2 = random.randint(2,3)
+pw = random.randint(4,5)
+pc = random.randint(6,7)
+
+
+pen = turtle.Turtle()
+pen.color('white')
+pencil = turtle.Turtle()
+pencil.color('white')
+
+startpen = turtle.Turtle()
+startpen.color('white')
+
+crosspen = turtle.Turtle()
+crosspen.color(colors[pc])
+crosspen.pensize(10)
+crosspen.hideturtle()
+
+finalpen = turtle.Turtle()
+finalpen.color(colors[pw])
+finalpen.pensize(10)
+finalpen.hideturtle()
+
+spacelist = []
+entrylist1 = []
+entrylist2 = []
+p = 2
+j1 = j2 = 0
+a = 0
+state = 'circle'
+check = 0
+whole = 0
+s1 = s2 = s3 = s4 = s5 = s6 = s7 = s8 = s9 = 'open'
+gamestate = 'True'
+
+
+def crosshor(x, y):
+    crosspen.speed('fast')
+    crosspen.hideturtle()
+    crosspen.up()
+    crosspen.setposition(x, y)
+    crosspen.down()
+    crosspen.forward(320)
+    global whole
+    whole += 1
+
+
+def crossver(x, y):
+    crosspen.speed('fast')
+    crosspen.hideturtle()
+    crosspen.up()
+    crosspen.setposition(x, y)
+    crosspen.down()
+    crosspen.setheading(270)
+    crosspen.forward(320)
+    global whole
+    whole += 1
+
+
+def crossright(x, y):
+    crosspen.speed('fast')
+    crosspen.hideturtle()
+    crosspen.up()
+    crosspen.setposition(x, y)
+    crosspen.down()
+    crosspen.setheading(0)
+    crosspen.right(45)
+    crosspen.forward(452)
+    global whole
+    whole += 1
+
+
+def crossleft(x, y):
+    crosspen.speed('fast')
+    crosspen.hideturtle()
+    crosspen.up()
+    crosspen.setposition(x, y)
+    crosspen.down()
+    crosspen.setheading(0)
+    crosspen.right(135)
+    crosspen.forward(452)
+    global whole
+    whole += 1
+
+
+def gameover():
+    if whole == 1:
+        pencil.clear()
+        finalpen.penup()
+        finalpen.setposition(-210, -280)
+        finalpen.pendown()
+        if check == 1:
+            finalpen.write("Player 1 won!!!", font=("consolas", 40, 'bold'))
+        else:
+            finalpen.write("Player 2 won!!!", font=("consolas", 40, 'bold'))
+
+
+def gamedraw():
+    if len(spacelist) == 9:
+        pencil.clear()
+        finalpen.penup()
+        finalpen.setposition(-210, -280)
+        finalpen.pendown()
+        finalpen.write("GAME DRAW!!!", font=("consolas", 40, 'bold'))
+
+
+def gameover1():
+    for i in range(len(entrylist1)):
+        if 1 in entrylist1 and 4 in entrylist1 and 7 in entrylist1:
+            crosshor(-200, 140)
+            return 0
+        elif 2 in entrylist1 and 5 in entrylist1 and 8 in entrylist1:
+            crosshor(-200, 20)
+            return 0
+        elif 3 in entrylist1 and 6 in entrylist1 and 9 in entrylist1:
+            crosshor(-200, -100)
+            return 0
+        elif 1 in entrylist1 and 2 in entrylist1 and 3 in entrylist1:
+            crossver(-160, 170)
+            return 0
+        elif 4 in entrylist1 and 5 in entrylist1 and 6 in entrylist1:
+            crossver(-40, 170)
+            return 0
+        elif 7 in entrylist1 and 8 in entrylist1 and 9 in entrylist1:
+            crossver(80, 170)
+            return 0
+        elif 1 in entrylist1 and 5 in entrylist1 and 9 in entrylist1:
+            crossright(-200, 180)
+            return 0
+        elif 5 in entrylist1 and 3 in entrylist1 and 7 in entrylist1:
+            crossleft(120, 170)
+            return 0
+
+
+def gameover2():
+    for i in range(len(entrylist2)):
+        if 1 in entrylist2 and 4 in entrylist2 and 7 in entrylist2:
+            crosshor(-200, 140)
+            return 0
+        elif 2 in entrylist2 and 5 in entrylist2 and 8 in entrylist2:
+            crosshor(-200, 20)
+            return 0
+        elif 3 in entrylist2 and 6 in entrylist2 and 9 in entrylist2:
+            crosshor(-200, -100)
+            return 0
+        elif 1 in entrylist2 and 2 in entrylist2 and 3 in entrylist2:
+            crossver(-160, 170)
+            return 0
+        elif 4 in entrylist2 and 5 in entrylist2 and 6 in entrylist2:
+            crossver(-40, 170)
+            return 0
+        elif 7 in entrylist2 and 8 in entrylist2 and 9 in entrylist2:
+            crossver(80, 170)
+            return 0
+        elif 1 in entrylist2 and 5 in entrylist2 and 9 in entrylist2:
+            crossright(-200, 170)
+            return 0
+        elif 5 in entrylist2 and 3 in entrylist2 and 7 in entrylist2:
+            crossleft(120, 170)
+            return 0
+
+
+def cross(x, y):
+    pen.pensize(10)
+    pen.color(colors[p2])
+    pen.speed('fastest')
+    pen.up()
+    pen.setposition(x, y)
+    pen.down()
+    pen.setheading(0)
+    pen.right(45)
+    pen.forward(100)
+    pen.up()
+    pen.setposition(x + 65, y)
+    pen.down()
+    pen.setheading(180)
+    pen.left(45)
+    pen.forward(100)
+    pen.setheading(0)
+    global state, p, j2
+    state = 'circle'
+    p += 1
+    j2 += 1
+
+
+def circle(x, y):
+    pen.setheading(0)
+    pen.pensize(10)
+    pen.color(colors[p1])
+    pen.speed('fastest')
+    pen.up()
+    pen.setposition(x, y)
+    pen.down()
+    pen.left(135)
+    pen.circle(48)
+    pen.setheading(0)
+    global state, p, j1
+    state = 'cross'
+    p += 1
+    j1 += 1
+
+
+def board(x1, y1):
+    pen.speed('fast')
+    for i in range(2):
+        pen.up()
+        pen.setposition(x1, y1)
+        pen.down()
+        pen.setheading(270)
+        pen.forward(360)
+        x1 += 120
+    x1 -= 360
+    y1 -= 120
+    for j in range(2):
+        pen.up()
+        pen.setposition(x1, y1)
+        pen.down()
+        pen.setheading(0)
+        pen.forward(360)
+        y1 -= 120
+
+
+def seal(a):
+    global s1, s2, s3, s4, s5, s6, s7, s8, s9
+    if a == 1:
+        s1 = 'cealed'
+    elif a == 2:
+        s2 = 'cealed'
+    elif a == 3:
+        s3 = 'cealed'
+    elif a == 4:
+        s4 = 'cealed'
+    elif a == 5:
+        s5 = 'cealed'
+    elif a == 6:
+        s6 = 'cealed'
+    elif a == 7:
+        s7 = 'cealed'
+    elif a == 8:
+        s8 = 'cealed'
+    elif a == 9:
+        s9 = 'cealed'
+
+
+def playerturn():
+    pencil.hideturtle()
+    if p % 2 == 0:
+        pencil.clear()
+        pencil.up()
+        pencil.setposition(-350, 250)
+        pencil.down()
+        pencil.write("Player 1 Turn", font=("consolas", 20, 'bold'))
+    else:
+        pencil.clear()
+        pencil.up()
+        pencil.setposition(-350, 250)
+        pencil.down()
+        pencil.write("Player 2 Turn", font=("consolas", 20, 'bold'))
+
+
+def square(x1, y1):
+    pen.speed('fast')
+    pen.up()
+    pen.setposition(x1, y1)
+    pen.down()
+    pen.setheading(0)
+    for i in range(4):
+        pen.forward(360)
+        pen.right(90)
+
+
+def drawcircle(x, y):
+    if -100 > x > -220:
+        if 200 > y > 80:
+            if s1 == 'open':
+                a = 1
+                if p % 2 == 0:
+                    entrylist1.append(1)
+                else:
+                    entrylist2.append(1)
+                circle(-125, 175)
+                spacelist.append(1)
+                seal(a)
+        elif 80 > y > -40:
+            if s2 == 'open':
+                a = 2
+                if p % 2 == 0:
+                    entrylist1.append(2)
+                else:
+                    entrylist2.append(2)
+                circle(-125, 55)
+                spacelist.append(2)
+                seal(a)
+        elif -40 > y > -160:
+            if s3 == 'open':
+                a = 3
+                if p % 2 == 0:
+                    entrylist1.append(3)
+                else:
+                    entrylist2.append(3)
+                circle(-125, -65)
+                spacelist.append(3)
+                seal(a)
+    elif 20 > x > -100:
+        if 200 > y > 80:
+            if s4 == 'open':
+                a = 4
+                if p % 2 == 0:
+                    entrylist1.append(4)
+                else:
+                    entrylist2.append(4)
+                circle(-5, 175)
+                spacelist.append(4)
+                seal(a)
+        elif 80 > y > -40:
+            if s5 == 'open':
+                a = 5
+                if p % 2 == 0:
+                    entrylist1.append(5)
+                else:
+                    entrylist2.append(5)
+                circle(-5, 55)
+                spacelist.append(5)
+                seal(a)
+        elif -40 > y > -160:
+            if s6 == 'open':
+                a = 6
+                if p % 2 == 0:
+                    entrylist1.append(6)
+                else:
+                    entrylist2.append(6)
+                circle(-5, -65)
+                spacelist.append(6)
+                seal(a)
+    elif 140 > x > 20:
+        if 200 > y > 80:
+            if s7 == 'open':
+                a = 7
+                if p % 2 == 0:
+                    entrylist1.append(7)
+                else:
+                    entrylist2.append(7)
+                circle(115, 175)
+                spacelist.append(7)
+                seal(a)
+        elif 80 > y > -40:
+            if s8 == 'open':
+                a = 8
+                if p % 2 == 0:
+                    entrylist1.append(8)
+                else:
+                    entrylist2.append(8)
+                circle(115, 55)
+                spacelist.append(8)
+                seal(a)
+        elif -40 > y > -160:
+            if s9 == 'open':
+                a = 9
+                if p % 2 == 0:
+                    entrylist1.append(9)
+                else:
+                    entrylist2.append(9)
+                circle(115, -65)
+                spacelist.append(9)
+                seal(a)
+    playerturn()
+    if j1 >= 3:
+        r1 = gameover1()
+        if r1 != 0:
+            gameover2()
+            gamedraw()
+        else:
+            global check
+            check += 1
+            gameover()
+
+
+def smallcircle(x, y):
+    startpen.color(colors[p1])
+    startpen.pensize(5)
+    startpen.penup()
+    startpen.setposition(x, y)
+    startpen.pendown()
+    startpen.circle(10)
+
+
+def smallcross(x, y):
+    startpen.pensize(5)
+    startpen.color(colors[p2])
+    startpen.speed('fast')
+    startpen.up()
+    startpen.setposition(x, y)
+    startpen.down()
+    startpen.setheading(0)
+    startpen.right(45)
+    startpen.forward(15)
+    startpen.up()
+    startpen.setposition(x + 10, y)
+    startpen.down()
+    startpen.setheading(180)
+    startpen.left(45)
+    startpen.forward(15)
+
+
+def startfun():
+    startpen.penup()
+    startpen.setposition(150, 300)
+    startpen.pendown()
+    startpen.write("Player 1", font=("consolas", 10, 'bold'))
+    smallcircle(230, 300)
+    startpen.color('white')
+    startpen.penup()
+    startpen.setposition(150, 250)
+    startpen.pendown()
+    startpen.write("Player 2", font=("consolas", 10, 'bold'))
+    smallcross(230, 260)
+    startpen.ht()
+
+
+def drawcross(x, y):
+    if -100 > x > -220:
+        if 200 > y > 80:
+            if s1 == 'open':
+                a = 1
+                if p % 2 == 0:
+                    entrylist1.append(1)
+                else:
+                    entrylist2.append(1)
+                cross(-200, 180)
+                spacelist.append(1)
+                seal(a)
+        elif 80 > y > -40:
+            if s2 == 'open':
+                a = 2
+                if p % 2 == 0:
+                    entrylist1.append(2)
+                else:
+                    entrylist2.append(2)
+                cross(-200, 60)
+                spacelist.append(2)
+                seal(a)
+        elif -40 > y > -160:
+            if s3 == 'open':
+                a = 3
+                if p % 2 == 0:
+                    entrylist1.append(3)
+                else:
+                    entrylist2.append(3)
+                cross(-200, -60)
+                spacelist.append(3)
+                seal(a)
+    elif 20 > x > -100:
+        if 200 > y > 80:
+            if s4 == 'open':
+                a = 4
+                if p % 2 == 0:
+                    entrylist1.append(4)
+                else:
+                    entrylist2.append(4)
+                cross(-80, 180)
+                spacelist.append(4)
+                seal(a)
+        elif 80 > y > -40:
+            if s5 == 'open':
+                a = 5
+                if p % 2 == 0:
+                    entrylist1.append(5)
+                else:
+                    entrylist2.append(5)
+                cross(-80, 60)
+                spacelist.append(5)
+                seal(a)
+        elif -40 > y > -160:
+            if s6 == 'open':
+                a = 6
+                if p % 2 == 0:
+                    entrylist1.append(6)
+                else:
+                    entrylist2.append(6)
+                cross(-80, -60)
+                spacelist.append(6)
+                seal(a)
+    elif 140 > x > 20:
+        if 200 > y > 80:
+            if s7 == 'open':
+                a = 7
+                if p % 2 == 0:
+                    entrylist1.append(7)
+                else:
+                    entrylist2.append(7)
+                cross(40, 180)
+                spacelist.append(7)
+                seal(a)
+        elif 80 > y > -40:
+            if s8 == 'open':
+                a = 8
+                if p % 2 == 0:
+                    entrylist1.append(8)
+                else:
+                    entrylist2.append(8)
+                cross(40, 60)
+                spacelist.append(8)
+                seal(a)
+        elif -40 > y > -160:
+            if s9 == 'open':
+                a = 9
+                if p % 2 == 0:
+                    entrylist1.append(9)
+                else:
+                    entrylist2.append(9)
+                cross(40, -60)
+                spacelist.append(9)
+                seal(a)
+    playerturn()
+    if j2 >= 3:
+        r2 = gameover2()
+        if r2 != 0:
+            gameover1()
+            gamedraw()
+        else:
+            global check
+            check += 2
+            gameover()
+
+
+def clicked(x, y):
+    if whole == 0:
+        if state == 'circle':
+            drawcircle(x, y)
+        elif state == 'cross':
+            drawcross(x, y)
+
+
+square(-220, 200)
+board(-100, 200)
+startfun()
+playerturn()
+onscreenclick(clicked)
+
+turtle.update()
+
+turtle.mainloop()
